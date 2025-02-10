@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../login/mylogin.dart';
-
-void main() {
-  runApp(FoodApp());
-}
-
 class FoodApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +22,6 @@ class _FoodPagesState extends State<FoodPages> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -36,15 +30,14 @@ class _FoodPagesState extends State<FoodPages> {
               ),
             ),
           ),
-          // Content at the Bottom
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20), // Add padding
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Large Heading Text
                   Text(
@@ -81,7 +74,7 @@ class _FoodPagesState extends State<FoodPages> {
                         padding: const EdgeInsets.symmetric(
                           vertical: 15,
                         ),
-                        minimumSize: Size(250, 50), // Set button width and height
+                        minimumSize: Size(250, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),

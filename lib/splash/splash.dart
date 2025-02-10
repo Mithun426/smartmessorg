@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'information.dart';
 
-import '../main.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -19,9 +18,10 @@ class _SplashState extends State<Splash> {
   {
     super.initState();
     Timer(Duration(seconds: 2),(){
-      Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) {
-        return MyHome();
-      }) );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => FoodApp()),
+      );
     });
   }
   @override
@@ -46,9 +46,7 @@ class _SplashState extends State<Splash> {
             height: 150,
           ),
         ),
-
         ],
-
       )
     );
   }

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "640359034812",
-    "project_id": "flutter8943",
-    "storage_bucket": "flutter8943.firebasestorage.app"
+    "project_number": "933062427250",
+    "project_id": "smart-mess-6ca8d",
+    "storage_bucket": "smart-mess-6ca8d.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:640359034812:android:1b99cecdd334451f27c5b9",
+        "mobilesdk_app_id": "1:933062427250:android:9f39e5d8546e8ba30638eb",
         "android_client_info": {
           "package_name": "com.example.smartmess"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDL9d0VysAvN6JxL6RXYgBr3J83UvWfAzY"
+          "current_key": "AIzaSyAm6Ah_uNSUchRypRTE4quvInQ91faOU0Q"
         }
       ],
       "services": {
