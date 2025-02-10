@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smartmess/login/mylogin.dart';
 import 'package:smartmess/login/snackbar.dart';
 import 'package:smartmess/services/myfirebase.dart';
 import '../pages/home.dart';
-
 
 class SignupPage extends StatefulWidget {
   @override
@@ -14,33 +14,50 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  bool isLoading=false;
-@override
-void despose(){
-  super.dispose();
-  email.dispose();
-  password.dispose();
-  name.dispose();
-}
-  void signUpUser(BuildContext context) async {
-    String res = await Authservices().signUpUser(
-      email: email.text,
-      password: password.text,
-      name: name.text,
-    );
+  bool isLoading = false;
+  @override
+  void despose() {
+    super.dispose();
+    email.dispose();
+    password.dispose();
+    name.dispose();
+  }
+  // void signUpUser(BuildContext context) async {
+  //   String res = await Authservices().signUpUser(
+  //     email: email.text,
+  //     password: password.text,
+  //     name: name.text,
+  //   );
 
-    if (res == "success") {
-      setState(() {
-        isLoading=true;
-      });
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+  //   if (res == "success") {
+  //     setState(() {
+  //       isLoading=true;
+  //     });
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (context) => Home()),
+  //     );
+  //   } else {
+  //     setState(() {
+  //       isLoading=false;
+  //     });
+  //    showSnackBar(context, res);
+  //   }
+  // }
+
+  void signUp() async {
+    final authService = Authservices();
+    var user = await authService.signUpUser(
+      email.text,
+      password.text,
+    );
+    if (user != null) {
+      print("Signup Successful: ${user.email}");
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return LoginPage();
+      }));
     } else {
-      setState(() {
-        isLoading=false;
-      });
-     showSnackBar(context, res);
+      print("Signup Failed");
     }
   }
 
@@ -103,7 +120,7 @@ void despose(){
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => signUpUser(context),
+              onPressed: () => signUp(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 minimumSize: Size(double.infinity, 50),
@@ -134,7 +151,8 @@ void despose(){
                   },
                   child: Text(
                     "Sign In",
-                    style: TextStyle(fontFamily: 'Urbanist', color: Colors.orange),
+                    style:
+                        TextStyle(fontFamily: 'Urbanist', color: Colors.orange),
                   ),
                 ),
               ],

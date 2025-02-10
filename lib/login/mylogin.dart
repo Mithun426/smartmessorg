@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smartmess/login/signuppage.dart';
 import 'package:smartmess/login/snackbar.dart';
@@ -18,36 +19,53 @@ class _LoginPageState extends State<LoginPage> {
       _obscureText = !_obscureText;
     });
   }
-  final GlobalKey<FormState>_formkey=GlobalKey<FormState>();
-  TextEditingController email=TextEditingController();
-  TextEditingController password=TextEditingController();
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   bool isLoading = false;
 
-  void despose(){
+  void despose() {
     super.dispose();
     email.dispose();
     password.dispose();
-
   }
-  void loginUser(BuildContext context) async {
-    String res = await Authservices().loginUser(
-      email: email.text,
-      password: password.text,
 
+  // void loginUser(BuildContext context) async {
+  //   String res = await Authservices().loginUser(
+  //     email: email.text,
+  //     password: password.text,
+
+  //   );
+
+  //   if (res == "success") {
+  //     setState(() {
+  //       isLoading=true;
+  //     });
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (context) => Home()),
+  //     );
+  //   } else {
+  //     setState(() {
+  //       isLoading=false;
+  //     });
+  //     showSnackBar(context, res);
+  //   }
+  // }
+  void login() async {
+    final authService = Authservices();
+    var user = await authService.login(
+      email.text,
+      password.text,
     );
-
-    if (res == "success") {
-      setState(() {
-        isLoading=true;
-      });
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+    if (user != null) {
+      print("Login Successful: ${user.email}");
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return Myfoodpage();
+      }));
     } else {
-      setState(() {
-        isLoading=false;
-      });
-      showSnackBar(context, res);
+      print("Login Failed");
     }
   }
 
@@ -106,17 +124,15 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Enter Email",
                       border: OutlineInputBorder(),
                     ),
-                    validator: (value){
-                      if(value!.length==0){
+                    validator: (value) {
+                      if (value!.length == 0) {
                         return "Please enter your email";
-                      }
-                      else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                          .hasMatch(value)) {
                         return 'Please enter a valid email address';
+                      } else {
+                        return null;
                       }
-                      else
-                        {
-                          return null;
-                        }
                     },
                   ),
                   SizedBox(height: 20),
@@ -128,7 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                       suffixIcon: IconButton(
                         onPressed: _togglePasswordVisibility,
                         icon: Icon(
-                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: _obscureText ? Colors.grey : Colors.black87,
                         ),
                       ),
@@ -136,12 +154,10 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Enter Password",
                       border: OutlineInputBorder(),
                     ),
-                    validator: (value){
-                      if(value!.length==0){
+                    validator: (value) {
+                      if (value!.length == 0) {
                         return "Enter the Password";
-                      }
-                      else
-                      {
+                      } else {
                         return null;
                       }
                     },
@@ -160,10 +176,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      if(_formkey.currentState!.validate()){
-                        Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) {
-                          return Myfoodpage();
-                        }) );
+                      if (_formkey.currentState!.validate()) {
+                        login();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -202,8 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -245,7 +258,8 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SignupPage()),
+                            MaterialPageRoute(
+                                builder: (context) => SignupPage()),
                           );
                         },
                         child: Text(
